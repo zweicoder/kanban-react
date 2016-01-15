@@ -34,6 +34,12 @@ const common = {
                 loaders: ['style', 'css'],
                 // Include accepts either a path or an array of paths.
                 include: PATHS.app
+            },
+            {
+                test: /\.jsx?$/,
+                //enable caching for improved performance  during development
+                loaders: ['babel?cacheDirectory'],
+                include: PATHS.app
             }
         ]
         // postLoaders section for stuff like code coverage checking
