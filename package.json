@@ -25,8 +25,6 @@
     "eslint-plugin-react": "^3.15.0",
     "html-webpack-plugin": "^1.7.0",
     "html-webpack-template": "^2.5.2",
-    "jshint": "^2.9.1",
-    "jshint-loader": "^0.8.3",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.11",
     "webpack-dev-server": "^1.14.1",
