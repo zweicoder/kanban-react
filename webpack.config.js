@@ -38,13 +38,8 @@ const common = {
             },
             {
                 test: /\.jsx?$/,
-                //enable caching for improved performance  during development
-                loader: 'babel',
-                include: PATHS.app,
-                query: {
-                    cacheDirectory: true,
-                    presets: ['react', 'es2015'] //survivejs-kanban
-                }
+                loaders: ['babel?cacheDirectory'],
+                include: PATHS.app
             }
         ]
         // postLoaders section for stuff like code coverage checking
