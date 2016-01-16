@@ -18,7 +18,12 @@ const common = {
     // without an extension. Note the .'s before extensions!!!
     // The matching will fail without!
     resolve: {
-        extensions: ['','.js','.jsx']
+        extensions: ['','.js','.jsx'],
+        root:PATHS.app,
+        alias: {
+            App: 'components/App.jsx',
+            Note: 'components/Note.jsx'
+        }
     },
     output: {
         path: PATHS.build,
