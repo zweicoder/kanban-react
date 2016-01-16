@@ -14,6 +14,12 @@ const common = {
     // Entry accepts a path or an object of entries.
     // The build chapter contains an example of the latter.
     entry: PATHS.app,
+    // Add resolve.extensions. '' is needed to allow imports
+    // without an extension. Note the .'s before extensions!!!
+    // The matching will fail without!
+    resolve: {
+        extensions: ['','.js','.jsx']
+    },
     output: {
         path: PATHS.build,
         filename: 'bundle.js'
