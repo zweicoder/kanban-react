@@ -27,6 +27,7 @@ const common = {
                 include: PATHS.app
             }
         ],
+        // Webpack loaders evaluated from right to left and bottom to top (separate definitions)
         loaders: [
             {
                 // Test expects a RegExp! Note the slashes!
@@ -38,8 +39,12 @@ const common = {
             {
                 test: /\.jsx?$/,
                 //enable caching for improved performance  during development
-                loaders: ['babel?cacheDirectory'],
-                include: PATHS.app
+                loader: 'babel',
+                include: PATHS.app,
+                query: {
+                    cacheDirectory: true,
+                    presets: ['react', 'es2015'] //survivejs-kanban
+                }
             }
         ]
         // postLoaders section for stuff like code coverage checking
