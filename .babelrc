@@ -8,7 +8,8 @@
     "start": {
       "presets": [
         "react-hmre"
-      ]
+      ],
+      "plugins": ["transform-react-stateless-component-name"]
     }
   }
 }
