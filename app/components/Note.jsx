@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 class Note extends React.Component {
     constructor(props) {
@@ -13,16 +14,23 @@ class Note extends React.Component {
         if (this.state.editing) {
             return (
                 <input type="text"
-                       autofocus={true}
                        placeholder={this.props.task}
-                       onBlur={this.finishEdit}
+                       onBlur={this.finishEdit} //when item loses focus
                        onKeyPress={this.onKeyPress}
+                       ref={this.onInputFocus}
                 />
             )
         }
 
         return <div onClick={this.edit}>{this.props.task}</div>
     }
+
+    onInputFocus = (c)=> {
+        if (c != null) {
+            c.value = this.props.task;
+            c.focus();
+        }
+    };
 
     onKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -37,7 +45,7 @@ class Note extends React.Component {
     };
 
     finishEdit = (e) => {
-        this.props.onEdit(e.target.value)
+        this.props.onEdit(e.target.value);
 
         this.setState({
             editing: false
