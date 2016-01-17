@@ -43,8 +43,16 @@ export default class App extends React.Component {
             <div>
                 <button onClick={this.addNote}>+</button>
 
-                <Notes notes={notes}/>
+                <Notes notes={notes} onEdit={this.editNote}/>
             </div>
         );
     }
+
+    editNote = (id, task) => {
+        const notes = this.state.notes.map((note)=> {
+            return note.id == id ? {id, task} : note
+        });
+
+        this.setState({notes});
+    };
 }
