@@ -23,7 +23,8 @@ const common = {
         root:PATHS.app,
         alias: {
             App: 'components/App.jsx',
-            Note: 'components/Note.jsx'
+            Note: 'components/Note.jsx',
+            Notes: 'components/Notes.jsx',
         }
     },
     output: {
