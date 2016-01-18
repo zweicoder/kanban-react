@@ -21,9 +21,20 @@ class Note extends React.Component {
                 />
             )
         }
+        const onDelete = this.props.onDelete;
 
-        return <div onClick={this.edit}>{this.props.task}</div>
+        return (
+            <div onClick={this.edit}>
+                <span>{this.props.task}</span>
+                {onDelete? this.renderDelete() : null}
+            </div>
+
+        )
     }
+
+    renderDelete = () =>{
+        return <button onClick={this.props.onDelete}> X </button>
+    };
 
     onInputFocus = (c)=> {
         if (c != null) {
@@ -54,11 +65,15 @@ class Note extends React.Component {
 }
 
 Note.propTypes = {
-    onEdit: React.PropTypes.func
+    onEdit: React.PropTypes.func,
+    onDelete: React.PropTypes.func
 };
 
 Note.defaultProps = {
     onEdit: (body)=> {
+    },
+
+    onDelete: (body)=> {
     }
 };
 
