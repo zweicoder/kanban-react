@@ -5,6 +5,9 @@ import assign from 'object-assign'
 
 class NoteStore {
     constructor() {
+        this.bindActions(NoteActions);
+
+        this.notes = []
     }
 
     create(note) {
