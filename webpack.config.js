@@ -22,9 +22,18 @@ const common = {
         extensions: ['','.js','.jsx'],
         root:PATHS.app,
         alias: {
+            Alt: 'lib/alt.js',
+
+            // Components
             App: 'components/App.jsx',
             Note: 'components/Note.jsx',
             Notes: 'components/Notes.jsx',
+
+            // Stores
+            NoteStore: 'stores/NoteStore.js',
+
+            //Actions
+            NoteActions: 'actions/NoteActions',
         }
     },
     output: {

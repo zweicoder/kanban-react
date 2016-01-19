@@ -1,43 +1,31 @@
 import React from 'react';
 import Notes from 'Notes';
 import uuid from 'node-uuid';
+import NoteStore from 'NoteStore'
+import NoteActions from 'NoteActions'
+
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            notes: [
-                {
-                    id: uuid.v4(),
-                    task: 'Write Resume'
-                },
-                {
-                    id: uuid.v4(),
-                    task: 'Learn React'
-                },
-                {
-                    id: uuid.v4(),
-                    task: 'Be awesome'
-                }
-            ]
-        }
+        this.state = NoteStore.getState();
     }
 
-    // Using property initializer via a babel preset that binds properties
-    // to with the App instance. https://github.com/jeffmo/es-class-fields-and-static-properties
-    addNote = () => {
-        this.setState({
-            notes: [...this.state.notes, {
-                id: uuid.v4(),
-                task: 'Some Task here'
-            }]
-        })
+    componentDidMount() {
+        NoteStore.listen(this.storeChanged);
+    }
+
+    componentWillUnmount() {
+        NoteStore.unlisten(this.storeChanged);
+    }
+
+    storeChanged = (state) => {
+        this.setState(state)
     };
 
     render() {
         // ()=> implies return, ()=> { return 'asd'} needs return
-
         const notes = this.state.notes;
         return (
             <div>
@@ -51,19 +39,15 @@ export default class App extends React.Component {
         );
     }
 
-    editNote = (id, task) => {
-        const notes = this.state.notes.map((note)=> {
-            return note.id == id ? {id, task} : note
-        });
+    addNote() {
+        NoteActions.create({task: 'New Task'})
+    }
 
-        this.setState({notes});
+    editNote(id, task) {
+        NoteActions.update({id, task})
     };
 
-    deleteNote = (id) => {
-        const notes = this.state.notes.filter((note)=> {
-            return !(note.id == id)
-        });
-
-        this.setState({notes});
+    deleteNote(id) {
+        NoteActions.delete(id)
     };
 }
