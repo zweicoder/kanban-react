@@ -34,6 +34,10 @@ const common = {
 
             //Actions
             NoteActions: 'actions/NoteActions',
+
+            // Helpers
+            Storage: 'lib/storage.js',
+            Persistence: 'lib/persist.js'
         }
     },
     output: {
