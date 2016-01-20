@@ -1,53 +1,39 @@
 import React from 'react';
-import Notes from 'Notes';
 import uuid from 'node-uuid';
-import NoteStore from 'NoteStore'
-import NoteActions from 'NoteActions'
+import Lanes from 'Lanes';
+import LaneActions from 'LaneActions';
+import LaneStore from 'LaneStore'
 
+// The basic idea is that you have a container that wraps your component,
+// the duty of this container component is to handle all the data fetching
+// and communication with the stores, it then renders the corresponding children.
+// The sub-components just render markup and are data agnostic thus making them highly reusable.
+import AltContainer from 'alt-container';
 
 export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = NoteStore.getState();
-    }
-
-    componentDidMount() {
-        NoteStore.listen(this.storeChanged);
-    }
-
-    componentWillUnmount() {
-        NoteStore.unlisten(this.storeChanged);
-    }
-
-    storeChanged = (state) => {
-        this.setState(state)
-    };
 
     render() {
         // ()=> implies return, ()=> { return 'asd'} needs return
-        const notes = this.state.notes;
         return (
             <div>
-                <button className="add-note" onClick={this.addNote}>+</button>
+                <button className="add-lane" onClick={this.addLane}>+</button>
 
-                <Notes notes={notes}
-                       onEdit={this.editNote}
-                       onDelete={this.deleteNote}
-                />
+                <AltContainer
+                    stores={[LaneStore]}
+                    inject={{
+                    lanes: ()=> LaneStore.getState().lanes || []
+                    }}
+                >
+                    <Lanes />
+                </AltContainer>
             </div>
         );
     }
 
-    addNote() {
-        NoteActions.create({task: 'New Task'})
+    addLane() {
+        LaneActions.create({
+            name: 'New Lane'
+        })
     }
 
-    editNote(id, task) {
-        NoteActions.update({id, task})
-    };
-
-    deleteNote(id) {
-        NoteActions.delete(id)
-    };
 }

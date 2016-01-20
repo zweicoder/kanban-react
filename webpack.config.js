@@ -28,12 +28,16 @@ const common = {
             App: 'components/App.jsx',
             Note: 'components/Note.jsx',
             Notes: 'components/Notes.jsx',
+            Lanes: 'components/Lanes.jsx',
+            Lane: 'components/Lane.jsx',
 
             // Stores
             NoteStore: 'stores/NoteStore.js',
+            LaneStore: 'stores/LaneStore.js',
 
             //Actions
             NoteActions: 'actions/NoteActions',
+            LaneActions: 'actions/LaneActions',
 
             // Helpers
             Storage: 'lib/storage.js',
