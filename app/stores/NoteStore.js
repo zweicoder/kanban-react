@@ -26,9 +26,9 @@ class NoteStore {
         return note
     }
 
-    update({id, task}) {
-        const notes = this.notes.map((note)=> {
-            return note.id === id ? {id, task} : note
+    update(updatedNote) {
+        const notes = this.notes.map((oldNote)=> {
+            return updatedNote.id === oldNote.id ? assign({}, oldNote, updatedNote) : oldNote
         });
         this.setState({notes});
     }

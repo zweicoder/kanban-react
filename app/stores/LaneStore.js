@@ -2,6 +2,7 @@ import LaneActions from 'LaneActions';
 import uuid from 'node-uuid';
 import alt from 'Alt';
 import NoteActions from 'NoteActions';
+import assign from 'object-assign'
 
 class LaneStore {
     constructor() {
@@ -19,7 +20,7 @@ class LaneStore {
         })
     }
 
-    attachToLane({laneId, noteId,}) {
+    attachToLane({laneId, noteId}) {
         const lanes = this.lanes.map((lane)=> {
             if (lane.id === laneId) {
                 lane.notes = [...lane.notes, noteId];
@@ -40,6 +41,20 @@ class LaneStore {
         });
 
         this.setState({lanes});
+    }
+
+    update(updatedLane) {
+        const lanes = this.lanes.map((oldLane)=> {
+            return oldLane.id === updatedLane.id ? assign({}, oldLane, updatedLane) : oldLane
+        });
+
+        this.setState({lanes});
+    }
+
+    delete(id) {
+        this.setState({
+            lanes: this.lanes.filter((lane)=>lane.id !== id)
+        })
     }
 }
 

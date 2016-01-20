@@ -1,13 +1,16 @@
 import React from 'react';
-import Note from 'Note'
+import Editable from 'Editable';
 
-export default ({notes, onEdit, onDelete}) => {
+export default ({notes, onEdit, onDelete, onValueClick}) => {
     return (
         <ul className="notes">{notes.map((note) =>
         <li className="note" key={note.id}>
-            <Note task={note.task}
-                  onEdit={onEdit.bind(null, note.id)}
-                  onDelete={onDelete.bind(null,note.id)}
+            <Editable
+                editing={note.editing}
+                value={note.task}
+                onValueClick={onValueClick.bind(null,note.id)}
+                onEdit={onEdit.bind(null, note.id)}
+                onDelete={onDelete.bind(null,note.id)}
             />
         </li>
             )}</ul>

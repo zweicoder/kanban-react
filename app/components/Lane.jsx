@@ -4,6 +4,7 @@ import NoteStore from 'NoteStore'
 import NoteActions from 'NoteActions'
 import AltContainer from 'alt-container'
 import LaneActions from 'LaneActions';
+import Editable from 'Editable'
 
 class Lane extends React.Component {
     constructor(props) {
@@ -12,6 +13,8 @@ class Lane extends React.Component {
         const id = props.lane.id;
         this.addNote = this.addNote.bind(this, id);
         this.deleteNote = this.deleteNote.bind(this, id);
+        this.editName = this.editName.bind(this, id);
+        this.onLaneNameClick = this.onLaneNameClick.bind(this, id);
     }
 
     render() {
@@ -20,7 +23,13 @@ class Lane extends React.Component {
         return (
             <div {...props}>
                 <div className="lane-header">
-                    <div className="lane-name"> {lane.name}</div>
+                    <Editable
+                        className="lane-name"
+                        onEdit={this.editName}
+                        onValueClick={this.onLaneNameClick}
+                        value={lane.name}
+                        editing={lane.editing}
+                    />
                     <div className="lane-add-note">
                         <button onClick={this.addNote}>+</button>
                     </div>
@@ -31,7 +40,11 @@ class Lane extends React.Component {
                         notes: () => NoteStore.get(lane.notes)
                     }}
                 >
-                    <Notes onEdit={this.editNote} onDelete={this.deleteNote}/>
+                    <Notes
+                        onEdit={this.editNote}
+                        onDelete={this.deleteNote}
+                        onValueClick={this.onNoteClick}
+                    />
                 </AltContainer >
             </div>
         )
@@ -46,12 +59,29 @@ class Lane extends React.Component {
     }
 
     editNote(noteId, task) {
-        NoteActions.update({id: noteId, task})
+        NoteActions.update({id: noteId, task, editing: false})
     }
 
     deleteNote(laneId, noteId) {
         LaneActions.detachFromLane({laneId, noteId});
         NoteActions.delete(noteId)
+    }
+
+    onNoteClick(id) {
+        NoteActions.update({id, editing: true})
+    }
+
+    onLaneNameClick(id) {
+        LaneActions.update({id, editing: true})
+    }
+
+    editName(id, name) {
+        if (name) {
+            LaneActions.update({id, name, editing: false})
+        }
+        else {
+            LaneActions.delete(id);
+        }
     }
 }
 

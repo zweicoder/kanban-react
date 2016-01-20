@@ -27,6 +27,7 @@ const common = {
             // Components
             App: 'components/App.jsx',
             Note: 'components/Note.jsx',
+            Editable: 'components/Editable.jsx',
             Notes: 'components/Notes.jsx',
             Lanes: 'components/Lanes.jsx',
             Lane: 'components/Lane.jsx',
