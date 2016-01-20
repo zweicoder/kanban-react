@@ -7,23 +7,29 @@ class NoteStore {
     constructor() {
         this.bindActions(NoteActions);
 
-        this.notes = []
+        this.notes = [];
+
+        this.exportPublicMethods({
+            get: this.get.bind(this)
+        })
     }
 
     create(note) {
+        note.id = uuid.v4();
         this.setState({
             notes: [...this.notes, {
-                id: uuid.v4(),
+                id: note.id,
                 task: note.task
             }]
-        })
+        });
+
+        return note
     }
 
     update({id, task}) {
         const notes = this.notes.map((note)=> {
             return note.id === id ? {id, task} : note
         });
-
         this.setState({notes});
     }
 
@@ -33,6 +39,17 @@ class NoteStore {
         });
 
         this.setState({notes})
+    }
+
+    get(ids) {
+        return (ids || [])
+            .map((id)=>
+                this.notes.find((note) => note.id === id)
+            )
+            .filter(
+                (a) => !!a
+            )
+
     }
 }
 

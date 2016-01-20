@@ -1,6 +1,7 @@
 import LaneActions from 'LaneActions';
 import uuid from 'node-uuid';
 import alt from 'Alt';
+import NoteActions from 'NoteActions';
 
 class LaneStore {
     constructor() {
@@ -16,6 +17,29 @@ class LaneStore {
                 name: lane.name || 'New lane'
             })
         })
+    }
+
+    attachToLane({laneId, noteId,}) {
+        const lanes = this.lanes.map((lane)=> {
+            if (lane.id === laneId) {
+                lane.notes = [...lane.notes, noteId];
+            }
+            return lane
+        });
+
+        this.setState({lanes})
+    }
+
+    detachFromLane({laneId,noteId}) {
+        const lanes = this.lanes.map((lane)=> {
+            if (lane.id === laneId) {
+                lane.notes = lane.notes.filter((note)=> note.id !== noteId)
+            }
+
+            return lane
+        });
+
+        this.setState({lanes});
     }
 }
 
